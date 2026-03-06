@@ -4,6 +4,7 @@ int main()
 {
     int n, i, j, temp;
     int at[20], bt[20], ct[20], tat[20], wt[20], rt[20], p[20];
+    float avg_tat = 0, avg_wt = 0;
 
     printf("Enter number of processes: ");
     scanf("%d",&n);
@@ -21,7 +22,7 @@ int main()
         scanf("%d",&bt[i]);
     }
 
-    /* Sorting by Arrival Time */
+    /* Sort by Arrival Time */
     for(i=0;i<n-1;i++)
     {
         for(j=i+1;j<n;j++)
@@ -54,13 +55,19 @@ int main()
             ct[i] = ct[i-1] + bt[i];
     }
 
-    /* TAT, WT, RT */
+    /* Calculate TAT, WT, RT */
     for(i=0;i<n;i++)
     {
         tat[i] = ct[i] - at[i];
         wt[i] = tat[i] - bt[i];
         rt[i] = wt[i];
+
+        avg_tat += tat[i];
+        avg_wt += wt[i];
     }
+
+    avg_tat = avg_tat / n;
+    avg_wt = avg_wt / n;
 
     printf("\nP\tAT\tBT\tCT\tTAT\tWT\tRT\n");
 
@@ -69,6 +76,9 @@ int main()
         printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
         p[i], at[i], bt[i], ct[i], tat[i], wt[i], rt[i]);
     }
+
+    printf("\nAverage Turnaround Time = %.2f", avg_tat);
+    printf("\nAverage Waiting Time = %.2f", avg_wt);
 
     return 0;
 }
